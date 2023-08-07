@@ -81,16 +81,18 @@
       xterm.enable = false;
       xfce = {
         enable = true;
-	noDesktop = true;
-	enableXfwm = false;
+	      noDesktop = true;
+	      enableXfwm = false;
       };
     };
     displayManager.defaultSession = "xfce+i3";
     windowManager.i3.enable = true;
+    layout = "us";
+    resolutions = [{x = 3840; y = 2160;}];
   };
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
+  # services.xserver.layout = "us";
 
   # Git configuration
   programs.git.enable = true;
@@ -107,11 +109,13 @@
    firefox
    emacs
    home-manager
- ];  
+ ];
+
+ # Fish settings
+ programs.fish.enable = true;
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
-    # FIXME: Replace with your username
     max = {
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
@@ -123,6 +127,7 @@
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
       extraGroups = [ "wheel" ];
+      shell = pkgs.fish;
     };
   };
 

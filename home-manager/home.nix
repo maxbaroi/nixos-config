@@ -48,15 +48,37 @@
   };
 
   # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  home.packages = with pkgs; [ xclip ];
 
-  # Enable home-manager and git
+  # Shell Configuration
+  programs.fish.shellAbbrs = {
+    emacs = "emacs --no-splash";
+  };
+  
+  # Enable home-manager 
   programs.home-manager.enable = true;
-  programs.git.enable = true;
-  programs.emacs.enable = true;
-  programs.emacs.extraPackages = epkgs: [epkgs.nix-mode];
 
+  # Enable git
+  programs.git.enable = true;
+
+  # Enable emacs
+  programs.emacs.enable = true;
+  programs.emacs.extraPackages = epkgs: [epkgs.nix-mode
+                                         epkgs.agda2-mode];
+  programs.emacs.extraConfig = 
+    ''
+      ;; Disable splash screen on startup
+      (setq inhibit-startup-screen t)
+
+      ;; Agda packages
+      (require 'agda2-mode)
+    '';
+
+  # Enable direnv
+  programs.direnv.enable = true;
+  programs.direnv.enableFishIntegration = true;
+  programs.direnv.nix-direnv.enable = true;
+  
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
