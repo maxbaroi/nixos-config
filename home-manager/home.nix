@@ -48,12 +48,13 @@
   };
 
   # Add stuff for your user as you see fit:
-  home.packages = with pkgs; [ xclip ];
+  home.packages = with pkgs; [ xclip
+                             tree];
 
   # Shell Configuration
-  programs.fish.shellAbbrs = {
-    emacs = "emacs --no-splash";
-  };
+  # programs.fish.shellAbbrs = {
+  #  emacs = "emacs --no-splash";
+  # };
   
   # Enable home-manager 
   programs.home-manager.enable = true;
@@ -64,23 +65,51 @@
   # Enable emacs
   programs.emacs.enable = true;
   programs.emacs.extraPackages = epkgs: [epkgs.nix-mode
-                                         epkgs.agda2-mode];
-  programs.emacs.extraConfig = 
+                                         epkgs.idris-mode
+                                         epkgs.haskell-mode
+                                         epkgs.agda2-mode
+                                         epkgs.zenburn-theme
+                                         epkgs.markdown-mode];
+  # programs.emacs.extraConfig =
+  home.file.".emacs.d/init.el".text =
     ''
       ;; Disable splash screen on startup
       (setq inhibit-startup-screen t)
 
+      ;; Set default font size
+      (set-face-attribute 'default nil :height 280)
+
+      ;; Use spaces instead of tabs
+      (setq-default indent-tabs-mode nil)
+
+      ;; Load them
+      (load-theme 'zenburn t)
+
       ;; Agda packages
       (require 'agda2-mode)
+
+      ;; Idris Setup
+      (setq idris-interpreter-path "idris2")
     '';
 
   # Enable direnv
   programs.direnv.enable = true;
   programs.direnv.enableFishIntegration = true;
   programs.direnv.nix-direnv.enable = true;
+
+  # home.file.".config/i3/config".text =
+  #   ''
+  #    set $mod Mod4
+  #  '';
+
   
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
+  xsession.windowManager.i3 = {
+    enable = true;
+    config.modifier = "Mod4";
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";

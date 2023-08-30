@@ -87,6 +87,7 @@
     };
     displayManager.defaultSession = "xfce+i3";
     windowManager.i3.enable = true;
+       
     layout = "us";
     resolutions = [{x = 3840; y = 2160;}];
   };
@@ -109,6 +110,7 @@
    firefox
    emacs
    home-manager
+   doas
  ];
 
  # Fish settings
@@ -136,9 +138,9 @@
   services.openssh = {
     enable = true;
     # Forbid root login through SSH.
-    permitRootLogin = "no";
+    settings.PermitRootLogin = "no";
     # Use keys only. Remove if you want to SSH using password (not recommended)
-    passwordAuthentication = false;
+    settings.PasswordAuthentication = false;
   };
 
   # Virtualization setting
