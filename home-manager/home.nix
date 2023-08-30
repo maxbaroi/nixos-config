@@ -49,7 +49,8 @@
 
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [ xclip
-                             tree];
+                               tree
+                               fossil];
 
   # Shell Configuration
   # programs.fish.shellAbbrs = {
